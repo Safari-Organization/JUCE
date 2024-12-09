@@ -2220,6 +2220,13 @@ void Component::internalMouseUp (MouseInputSource source,
                                  Time time,
                                  const ModifierKeys oldModifiers)
 {
+
+
+    #ifdef IGNORE_MOUSE_WITH_PRO_TOOLS_AUTOMATION_MODIFIERS
+    if (oldModifiers.isAltDown() && oldModifiers.isCommandDown() && oldModifiers.isCtrlDown())
+        return;
+    #endif
+
     if (flags.mouseDownWasBlocked && isCurrentlyBlockedByAnotherModalComponent())
         return;
 
