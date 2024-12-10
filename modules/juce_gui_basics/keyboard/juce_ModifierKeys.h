@@ -59,12 +59,20 @@ public:
     ModifierKeys& operator= (const ModifierKeys&) = default;
 
     //==============================================================================
+    /** Checks whether the 'Windows' / 'Start' / 'Super' or 'Command' key flag is set (Both Left and Right)
+
+        Due to legacy reasons, JUCE mapped 'command' to Ctrl on Windows. While handy,
+        Sometimes you it's need to check this specific key.
+    */
+    inline bool isCommandOrWinKeyDown() const noexcept          { return testFlags (commandModifier); }
+
     /** Checks whether the 'command' key flag is set (or 'ctrl' on Windows/Linux).
 
         This is a platform-agnostic way of checking for the operating system's
         preferred command-key modifier - so on the Mac it tests for the cmd key, on
         Windows/Linux, it's actually checking for the CTRL key.
     */
+
     inline bool isCommandDown() const noexcept          { return testFlags (commandModifier); }
 
     /** Checks whether the user is trying to launch a pop-up menu.
