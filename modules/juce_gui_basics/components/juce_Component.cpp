@@ -2130,10 +2130,22 @@ void Component::internalMouseExit (MouseInputSource source, Point<float> relativ
     MouseListenerList::sendMouseEvent (checker, &MouseListener::mouseExit);
 }
 
+#ifdef IGNORE_MOUSE_WITH_PRO_TOOLS_AUTOMATION_MODIFIERS
+    static bool wasProToolsModifiersDownState = false;
+    bool JUCE_CALLTYPE Component::wasProToolsModifiersDown() noexcept
+    {
+        return wasProToolsModifiersDownState;
+    }
+#endif
+
 void Component::internalMouseDown (MouseInputSource source,
                                    const detail::PointerState& relativePointerState,
                                    Time time)
 {
+    #ifdef IGNORE_MOUSE_WITH_PRO_TOOLS_AUTOMATION_MODIFIERS
+    const auto curModifiers = ModifierKeys::getCurrentModifiers();
+    wasProToolsModifiersDownState = curModifiers.isCommandOrWinKeyDown() && curModifiers.isCtrlDown();
+    #endif
     auto& desktop = Desktop::getInstance();
 
     const auto me = makeMouseEvent (source,
@@ -2203,6 +2215,10 @@ void Component::internalMouseUp (MouseInputSource source,
                                  Time time,
                                  const ModifierKeys oldModifiers)
 {
+    #ifdef IGNORE_MOUSE_WITH_PRO_TOOLS_AUTOMATION_MODIFIERS
+      if (oldModifiers.isAltDown() && oldModifiers.isCommandDown() && oldModifiers.isCtrlDown())
+          return;
+    #endif
     if (flags.mouseDownWasBlocked && isCurrentlyBlockedByAnotherModalComponent())
         return;
 
