@@ -34,14 +34,13 @@
 
 namespace juce
 {
-
 //==============================================================================
 /**
     The base class for all JUCE user-interface objects.
 
     @tags{GUI}
 */
-class JUCE_API  Component  : public MouseListener
+class JUCE_API Component : public MouseListener
 {
 public:
     //==============================================================================
@@ -57,7 +56,7 @@ public:
         subclass of Component or use one of the other types of component from
         the library.
     */
-    Component() noexcept;
+    Component () noexcept;
 
     /** Destructor.
 
@@ -71,7 +70,7 @@ public:
         callback. Any ComponentListener objects that have registered with it will also have their
         ComponentListener::componentBeingDeleted() methods called.
     */
-    ~Component() override;
+    ~Component () override;
 
     //==============================================================================
     /** Creates a component, setting its name at the same time.
@@ -82,7 +81,7 @@ public:
     /** Returns the name of this component.
         @see setName
     */
-    String getName() const noexcept                  { return componentName; }
+    String getName () const noexcept { return componentName; }
 
     /** Sets the name of this component.
 
@@ -96,7 +95,7 @@ public:
     /** Returns the ID string that was set by setComponentID().
         @see setComponentID, findChildWithID
     */
-    String getComponentID() const noexcept           { return componentID; }
+    String getComponentID () const noexcept { return componentID; }
 
     /** Sets the component's ID string.
         You can retrieve the ID using getComponentID().
@@ -128,19 +127,19 @@ public:
 
         @see isShowing, setVisible
     */
-    bool isVisible() const noexcept                         { return flags.visibleFlag; }
+    bool isVisible () const noexcept { return flags.visibleFlag; }
 
     /** Called when this component's visibility changes.
         @see setVisible, isVisible
     */
-    virtual void visibilityChanged();
+    virtual void visibilityChanged ();
 
     /** Tests whether this component and all its parents are visible.
 
         @returns    true only if this component and all its parents are visible.
         @see isVisible
     */
-    bool isShowing() const;
+    bool isShowing () const;
 
     //==============================================================================
     /** Makes this component appear as a window on the desktop.
@@ -176,12 +175,12 @@ public:
 
         @see addToDesktop, isOnDesktop
     */
-    void removeFromDesktop();
+    void removeFromDesktop ();
 
     /** Returns true if this component is currently showing on the desktop.
         @see addToDesktop, removeFromDesktop
     */
-    bool isOnDesktop() const noexcept;
+    bool isOnDesktop () const noexcept;
 
     /** Returns the heavyweight window that contains this component.
 
@@ -193,7 +192,7 @@ public:
 
         @see addToDesktop, isOnDesktop
     */
-    ComponentPeer* getPeer() const;
+    ComponentPeer* getPeer () const;
 
     /** For components on the desktop, this is called if the system wants to close the window.
 
@@ -202,7 +201,7 @@ public:
         component should do something about it, but you can override this to ignore the event
         if you want.
     */
-    virtual void userTriedToCloseWindow();
+    virtual void userTriedToCloseWindow ();
 
     /** Called for a desktop component which has just been minimised or un-minimised.
         This will only be called for components on the desktop.
@@ -217,7 +216,7 @@ public:
         has different requirements. The method only used if this component is added
         to the desktop - it has no effect for child components.
     */
-    virtual float getDesktopScaleFactor() const;
+    virtual float getDesktopScaleFactor () const;
 
     //==============================================================================
     /** Brings the component to the front of its siblings.
@@ -240,7 +239,7 @@ public:
 
         @see toFront, toBehind, setAlwaysOnTop
     */
-    void toBack();
+    void toBack ();
 
     /** Changes this component's z-order so that it's just behind another component.
         @see toFront, toBack
@@ -255,7 +254,7 @@ public:
     /** Returns true if this component is set to always stay in front of its siblings.
         @see setAlwaysOnTop
     */
-    bool isAlwaysOnTop() const noexcept;
+    bool isAlwaysOnTop () const noexcept;
 
     //==============================================================================
     /** Returns the x coordinate of the component's left edge.
@@ -265,7 +264,7 @@ public:
         bounds will no longer be a direct reflection of the position at which it appears within
         its parent, as the transform will be applied to its bounding box.
     */
-    int getX() const noexcept                               { return boundsRelativeToParent.getX(); }
+    int getX () const noexcept { return boundsRelativeToParent.getX(); }
 
     /** Returns the y coordinate of the top of this component.
         This is a distance in pixels from the top edge of the component's parent.
@@ -274,13 +273,13 @@ public:
         bounds will no longer be a direct reflection of the position at which it appears within
         its parent, as the transform will be applied to its bounding box.
     */
-    int getY() const noexcept                               { return boundsRelativeToParent.getY(); }
+    int getY () const noexcept { return boundsRelativeToParent.getY(); }
 
     /** Returns the component's width in pixels. */
-    int getWidth() const noexcept                           { return boundsRelativeToParent.getWidth(); }
+    int getWidth () const noexcept { return boundsRelativeToParent.getWidth(); }
 
     /** Returns the component's height in pixels. */
-    int getHeight() const noexcept                          { return boundsRelativeToParent.getHeight(); }
+    int getHeight () const noexcept { return boundsRelativeToParent.getHeight(); }
 
     /** Returns the x coordinate of the component's right-hand edge.
         This is a distance in pixels from the left edge of the component's parent.
@@ -289,10 +288,10 @@ public:
         bounds will no longer be a direct reflection of the position at which it appears within
         its parent, as the transform will be applied to its bounding box.
     */
-    int getRight() const noexcept                           { return boundsRelativeToParent.getRight(); }
+    int getRight () const noexcept { return boundsRelativeToParent.getRight(); }
 
     /** Returns the component's top-left position as a Point. */
-    Point<int> getPosition() const noexcept                 { return boundsRelativeToParent.getPosition(); }
+    Point<int> getPosition () const noexcept { return boundsRelativeToParent.getPosition(); }
 
     /** Returns the y coordinate of the bottom edge of this component.
         This is a distance in pixels from the top edge of the component's parent.
@@ -301,7 +300,7 @@ public:
         bounds will no longer be a direct reflection of the position at which it appears within
         its parent, as the transform will be applied to its bounding box.
     */
-    int getBottom() const noexcept                          { return boundsRelativeToParent.getBottom(); }
+    int getBottom () const noexcept { return boundsRelativeToParent.getBottom(); }
 
     /** Returns this component's bounding box.
         The rectangle returned is relative to the top-left of the component's parent.
@@ -310,13 +309,13 @@ public:
         bounds will no longer be a direct reflection of the position at which it appears within
         its parent, as the transform will be applied to its bounding box.
     */
-    Rectangle<int> getBounds() const noexcept               { return boundsRelativeToParent; }
+    Rectangle<int> getBounds () const noexcept { return boundsRelativeToParent; }
 
     /** Returns the component's bounds, relative to its own origin.
         This is like getBounds(), but returns the rectangle in local coordinates, In practice, it'll
         return a rectangle with position (0, 0), and the same size as this component.
     */
-    Rectangle<int> getLocalBounds() const noexcept;
+    Rectangle<int> getLocalBounds () const noexcept;
 
     /** Returns the area of this component's parent which this component covers.
 
@@ -325,28 +324,28 @@ public:
         the smallest rectangle that fully covers the component's transformed bounding box.
         If this component has no parent, the return value will simply be the same as getBounds().
     */
-    Rectangle<int> getBoundsInParent() const noexcept;
+    Rectangle<int> getBoundsInParent () const noexcept;
 
     //==============================================================================
     /** Returns this component's x coordinate relative the screen's top-left origin.
         @see getX, localPointToGlobal
     */
-    int getScreenX() const;
+    int getScreenX () const;
 
     /** Returns this component's y coordinate relative the screen's top-left origin.
         @see getY, localPointToGlobal
     */
-    int getScreenY() const;
+    int getScreenY () const;
 
     /** Returns the position of this component's top-left corner relative to the screen's top-left.
         @see getScreenBounds
     */
-    Point<int> getScreenPosition() const;
+    Point<int> getScreenPosition () const;
 
     /** Returns the bounds of this component, relative to the screen's top-left.
         @see getScreenPosition
     */
-    Rectangle<int> getScreenBounds() const;
+    Rectangle<int> getScreenBounds () const;
 
     /** Converts a point to be relative to this component's coordinate space.
 
@@ -528,8 +527,10 @@ public:
 
         @see setBounds
     */
-    void setBoundsRelative (float proportionalX, float proportionalY,
-                            float proportionalWidth, float proportionalHeight);
+    void setBoundsRelative (float proportionalX,
+                            float proportionalY,
+                            float proportionalWidth,
+                            float proportionalHeight);
 
     /** Changes the component's position and size in terms of fractions of its parent's size.
 
@@ -626,13 +627,13 @@ public:
         For more details about transforms, see setTransform().
         @see setTransform
     */
-    AffineTransform getTransform() const;
+    AffineTransform getTransform () const;
 
     /** Returns true if a non-identity transform is being applied to this component.
         For more details about transforms, see setTransform().
         @see setTransform
     */
-    bool isTransformed() const noexcept;
+    bool isTransformed () const noexcept;
 
     /** Returns the approximate scale factor for a given component by traversing its parent hierarchy
         and applying each transform and finally scaling this by the global scale factor.
@@ -655,14 +656,14 @@ public:
         If the component has no parent (i.e. if it's on the desktop), this will return
         the width of the screen.
     */
-    int getParentWidth() const noexcept;
+    int getParentWidth () const noexcept;
 
     /** Returns the height of the component's parent.
 
         If the component has no parent (i.e. if it's on the desktop), this will return
         the height of the screen.
     */
-    int getParentHeight() const noexcept;
+    int getParentHeight () const noexcept;
 
     /** Returns the screen coordinates of the monitor that contains this component.
 
@@ -670,14 +671,14 @@ public:
         monitors, it will return the area of the monitor that contains the component's
         centre.
     */
-    Rectangle<int> getParentMonitorArea() const;
+    Rectangle<int> getParentMonitorArea () const;
 
     //==============================================================================
     /** Returns the number of child components that this component contains.
 
         @see getChildren, getChildComponent, getIndexOfChildComponent
     */
-    int getNumChildComponents() const noexcept;
+    int getNumChildComponents () const noexcept;
 
     /** Returns one of this component's child components, by it index.
 
@@ -704,7 +705,7 @@ public:
     /** Provides access to the underlying array of child components.
         The most likely reason you may want to use this is for iteration in a range-based for loop.
     */
-    const Array<Component*>& getChildren() const noexcept          { return childComponentList; }
+    const Array<Component*>& getChildren () const noexcept { return childComponentList; }
 
     /** Looks for a child component with the specified ID.
         @see setComponentID, getComponentID
@@ -805,7 +806,7 @@ public:
     /** Removes all this component's children.
         Note that this won't delete them! To do that, use deleteAllChildren() instead.
     */
-    void removeAllChildren();
+    void removeAllChildren ();
 
     /** Removes and deletes all of this component's children.
         My advice is to avoid this method! It's an old function that is only kept here for
@@ -816,14 +817,14 @@ public:
         etc to manage their lifetimes appropriately.
         @see removeAllChildren
     */
-    void deleteAllChildren();
+    void deleteAllChildren ();
 
     /** Returns the component which this component is inside.
 
         If this is the highest-level component or hasn't yet been added to
         a parent, this will return null.
     */
-    Component* getParentComponent() const noexcept                  { return parentComponent; }
+    Component* getParentComponent () const noexcept { return parentComponent; }
 
     /** Searches the parent components for a component of a specified class.
 
@@ -832,7 +833,7 @@ public:
         of the parents are suitable.
     */
     template <class TargetClass>
-    TargetClass* findParentComponentOfClass() const
+    TargetClass* findParentComponentOfClass () const
     {
         for (auto* p = parentComponent; p != nullptr; p = p->parentComponent)
             if (auto* target = dynamic_cast<TargetClass*> (p))
@@ -847,7 +848,7 @@ public:
         finds the highest one that doesn't have a parent (i.e. is on the desktop or
         not yet added to a parent), and will return that.
     */
-    Component* getTopLevelComponent() const noexcept;
+    Component* getTopLevelComponent () const noexcept;
 
     /** Checks whether a component is anywhere inside this component or its children.
 
@@ -867,13 +868,13 @@ public:
 
         @see getParentComponent, isShowing, ComponentListener::componentParentHierarchyChanged
     */
-    virtual void parentHierarchyChanged();
+    virtual void parentHierarchyChanged ();
 
     /** Subclasses can use this callback to be told when children are added or removed, or
         when their z-order changes.
         @see parentHierarchyChanged, ComponentListener::componentChildrenChanged
     */
-    virtual void childrenChanged();
+    virtual void childrenChanged ();
 
     //==============================================================================
     /** Tests whether a given point is inside the component.
@@ -917,19 +918,19 @@ public:
     /** Types of control that are commonly found in windows, especially title-bars. */
     enum class WindowControlKind
     {
-        client,             ///< Parts of the component that are not transparent and also don't have any of the following control functions
-        caption,            ///< The part of a title bar that may be dragged by the mouse to move the window
-        minimise,           ///< The minimise/iconify button
-        maximise,           ///< The maximise/zoom button
-        close,              ///< The button that dismisses the component
-        sizeTop,            ///< The area that may be dragged to move the top edge of the window
-        sizeLeft,           ///< The area that may be dragged to move the left edge of the window
-        sizeRight,          ///< The area that may be dragged to move the right edge of the window
-        sizeBottom,         ///< The area that may be dragged to move the bottom edge of the window
-        sizeTopLeft,        ///< The area that may be dragged to move the top-left corner of the window
-        sizeTopRight,       ///< The area that may be dragged to move the top-right corner of the window
-        sizeBottomLeft,     ///< The area that may be dragged to move the bottom-left corner of the window
-        sizeBottomRight,    ///< The area that may be dragged to move the bottom-right corner of the window
+        client, ///< Parts of the component that are not transparent and also don't have any of the following control functions
+        caption, ///< The part of a title bar that may be dragged by the mouse to move the window
+        minimise, ///< The minimise/iconify button
+        maximise, ///< The maximise/zoom button
+        close, ///< The button that dismisses the component
+        sizeTop, ///< The area that may be dragged to move the top edge of the window
+        sizeLeft, ///< The area that may be dragged to move the left edge of the window
+        sizeRight, ///< The area that may be dragged to move the right edge of the window
+        sizeBottom, ///< The area that may be dragged to move the bottom edge of the window
+        sizeTopLeft, ///< The area that may be dragged to move the top-left corner of the window
+        sizeTopRight, ///< The area that may be dragged to move the top-right corner of the window
+        sizeBottomLeft, ///< The area that may be dragged to move the bottom-left corner of the window
+        sizeBottomRight, ///< The area that may be dragged to move the bottom-right corner of the window
     };
 
     /** For components that are added to the desktop, this may be called to determine what kind of
@@ -953,21 +954,27 @@ public:
 
         This is called by the peer. Component subclasses may override this but should not call it directly.
     */
-    virtual void windowControlClickedClose() {}
+    virtual void windowControlClickedClose ()
+    {
+    }
 
     /** For components that are added to the desktop, this may be called to indicate that the mouse
         was clicked inside the area of the "minimise" control. This is currently only called on Windows.
 
         This is called by the peer. Component subclasses may override this but should not call it directly.
     */
-    virtual void windowControlClickedMinimise() {}
+    virtual void windowControlClickedMinimise ()
+    {
+    }
 
     /** For components that are added to the desktop, this may be called to indicate that the mouse
         was clicked inside the area of the "maximise" control. This is currently only called on Windows.
 
         This is called by the peer. Component subclasses may override this but should not call it directly.
     */
-    virtual void windowControlClickedMaximise() {}
+    virtual void windowControlClickedMaximise ()
+    {
+    }
 
     /** Changes the default return value for the hitTest() method.
 
@@ -1098,7 +1105,7 @@ public:
 
         @see paint
     */
-    void repaint();
+    void repaint ();
 
     /** Marks a subsection of this component as needing to be redrawn.
 
@@ -1201,7 +1208,7 @@ public:
     /** Returns true if this component doesn't require its graphics context to be clipped
         when it is being painted.
     */
-    bool isPaintingUnclipped() const noexcept;
+    bool isPaintingUnclipped () const noexcept;
 
     //==============================================================================
     /** Adds an effect filter to alter the component's appearance.
@@ -1222,7 +1229,7 @@ public:
     /** Returns the current component effect.
         @see setComponentEffect
     */
-    ImageEffectFilter* getComponentEffect() const noexcept;
+    ImageEffectFilter* getComponentEffect () const noexcept;
 
     //==============================================================================
     /** Finds the appropriate look-and-feel to use for this component.
@@ -1233,7 +1240,7 @@ public:
 
         @see setLookAndFeel, lookAndFeelChanged
     */
-    LookAndFeel& getLookAndFeel() const noexcept;
+    LookAndFeel& getLookAndFeel () const noexcept;
 
     /** Sets the look and feel to use for this component.
 
@@ -1263,14 +1270,14 @@ public:
 
         @see sendLookAndFeelChange, getLookAndFeel
     */
-    virtual void lookAndFeelChanged();
+    virtual void lookAndFeelChanged ();
 
     /** Calls the methods repaint(), lookAndFeelChanged(), and colourChanged() in this
         component and all its children recursively.
 
         @see lookAndFeelChanged
     */
-    void sendLookAndFeelChange();
+    void sendLookAndFeelChange ();
 
     //==============================================================================
     /** Indicates whether any parts of the component might be transparent.
@@ -1294,7 +1301,7 @@ public:
         @returns the value that was set by setOpaque, (the default being false)
         @see setOpaque
     */
-    bool isOpaque() const noexcept;
+    bool isOpaque () const noexcept;
 
     //==============================================================================
     /** Indicates whether the component should be brought to the front when clicked.
@@ -1314,7 +1321,7 @@ public:
     /** Indicates whether the component should be brought to the front when clicked-on.
         @see setBroughtToFrontOnMouseClick
     */
-    bool isBroughtToFrontOnMouseClick() const noexcept;
+    bool isBroughtToFrontOnMouseClick () const noexcept;
 
     //==============================================================================
     // Focus methods
@@ -1338,7 +1345,7 @@ public:
 
         @see setExplicitFocusOrder
     */
-    int getExplicitFocusOrder() const;
+    int getExplicitFocusOrder () const;
 
     /** A focus container type that can be passed to setFocusContainerType().
 
@@ -1399,25 +1406,25 @@ public:
 
         @see setFocusContainerType
     */
-    bool isFocusContainer() const noexcept;
+    bool isFocusContainer () const noexcept;
 
     /** Returns true if this component has been marked as a keyboard focus container.
 
         @see setFocusContainerType
     */
-    bool isKeyboardFocusContainer() const noexcept;
+    bool isKeyboardFocusContainer () const noexcept;
 
     /** Returns the focus container for this component.
 
         @see isFocusContainer, setFocusContainerType
     */
-    Component* findFocusContainer() const;
+    Component* findFocusContainer () const;
 
     /** Returns the keyboard focus container for this component.
 
         @see isFocusContainer, setFocusContainerType
     */
-    Component* findKeyboardFocusContainer() const;
+    Component* findKeyboardFocusContainer () const;
 
     //==============================================================================
     /** Sets a flag to indicate whether this component wants keyboard focus or not.
@@ -1439,7 +1446,7 @@ public:
 
         @see setWantsKeyboardFocus
     */
-    bool getWantsKeyboardFocus() const noexcept;
+    bool getWantsKeyboardFocus () const noexcept;
 
     /** Chooses whether a click on this component automatically grabs the focus.
 
@@ -1453,7 +1460,7 @@ public:
 
         @see setMouseClickGrabsKeyboardFocus
     */
-    bool getMouseClickGrabsKeyboardFocus() const noexcept;
+    bool getMouseClickGrabsKeyboardFocus () const noexcept;
 
     /** Tries to give keyboard focus to this component.
 
@@ -1480,7 +1487,7 @@ public:
              hasKeyboardFocus, getCurrentlyFocusedComponent, focusGained, focusLost,
              keyPressed, keyStateChanged
     */
-    void grabKeyboardFocus();
+    void grabKeyboardFocus ();
 
     /** If this component or any of its children currently have the keyboard focus,
         this will defocus it, send a focus change notification, and try to pass the
@@ -1489,7 +1496,7 @@ public:
         @see grabKeyboardFocus, setWantsKeyboardFocus, getCurrentlyFocusedComponent,
              focusGained, focusLost
     */
-    void giveAwayKeyboardFocus();
+    void giveAwayKeyboardFocus ();
 
     /** Returns true if this component currently has the keyboard focus.
 
@@ -1521,10 +1528,10 @@ public:
 
         @returns the focused component, or nullptr if nothing is focused.
     */
-    static Component* JUCE_CALLTYPE getCurrentlyFocusedComponent() noexcept;
+    static Component* JUCE_CALLTYPE getCurrentlyFocusedComponent () noexcept;
 
     /** If any component has keyboard focus, this will defocus it. */
-    static void JUCE_CALLTYPE unfocusAllComponents();
+    static void JUCE_CALLTYPE unfocusAllComponents ();
 
     //==============================================================================
     /** Creates a ComponentTraverser object to determine the logic by which focus should be
@@ -1538,7 +1545,7 @@ public:
         If you override this to return a custom traverser object, then this component and
         all its sub-components will use the new object to make their focusing decisions.
     */
-    virtual std::unique_ptr<ComponentTraverser> createFocusTraverser();
+    virtual std::unique_ptr<ComponentTraverser> createFocusTraverser ();
 
     /** Creates a ComponentTraverser object to use to determine the logic by which keyboard
         focus should be passed from this component.
@@ -1552,7 +1559,7 @@ public:
         all its sub-components will use the new object to make their keyboard focusing
         decisions.
     */
-    virtual std::unique_ptr<ComponentTraverser> createKeyboardFocusTraverser();
+    virtual std::unique_ptr<ComponentTraverser> createKeyboardFocusTraverser ();
 
     /** Use this to indicate that the component should have an outline drawn around it
         when it has keyboard focus.
@@ -1563,13 +1570,13 @@ public:
 
         @see FocusOutline, hasFocusOutline
     */
-    void setHasFocusOutline (bool hasFocusOutline) noexcept  { flags.hasFocusOutlineFlag = hasFocusOutline; }
+    void setHasFocusOutline (bool hasFocusOutline) noexcept { flags.hasFocusOutlineFlag = hasFocusOutline; }
 
     /** Returns true if this component should have a focus outline.
 
         @see FocusOutline, setHasFocusOutline
     */
-    bool hasFocusOutline() const noexcept                    { return flags.hasFocusOutlineFlag; }
+    bool hasFocusOutline () const noexcept { return flags.hasFocusOutlineFlag; }
 
     //==============================================================================
     /** Returns true if the component (and all its parents) are enabled.
@@ -1583,7 +1590,7 @@ public:
 
         @see setEnabled, enablementChanged
     */
-    bool isEnabled() const noexcept;
+    bool isEnabled () const noexcept;
 
     /** Enables or disables this component.
 
@@ -1607,13 +1614,13 @@ public:
 
         @see setEnabled, isEnabled
     */
-    virtual void enablementChanged();
+    virtual void enablementChanged ();
 
     //==============================================================================
     /** Returns the component's current transparency level.
         See setAlpha() for more details.
     */
-    float getAlpha() const noexcept;
+    float getAlpha () const noexcept;
 
     /** Changes the transparency of this component.
         When painted, the entire component and all its children will be rendered
@@ -1628,7 +1635,7 @@ public:
         If you override this, you should also invoke the base class's implementation
         during your overridden function, as it performs some repainting behaviour.
     */
-    virtual void alphaChanged();
+    virtual void alphaChanged ();
 
     //==============================================================================
     /** Changes the mouse cursor shape to use when the mouse is over this component.
@@ -1648,7 +1655,7 @@ public:
 
         @see MouseCursor
     */
-    virtual MouseCursor getMouseCursor();
+    virtual MouseCursor getMouseCursor ();
 
     /** Forces the current mouse cursor to be updated.
 
@@ -1660,7 +1667,7 @@ public:
         (If you're changing the cursor using setMouseCursor(), you don't need to bother
         calling this).
     */
-    void updateMouseCursor() const;
+    void updateMouseCursor () const;
 
     //==============================================================================
     /** Components can override this method to draw their content.
@@ -1967,9 +1974,9 @@ public:
     /** Enumeration used by the focusGained() and focusLost() methods. */
     enum FocusChangeType
     {
-        focusChangedByMouseClick,   /**< Means that the user clicked the mouse to change focus. */
-        focusChangedByTabKey,       /**< Means that the user pressed the tab key to move the focus. */
-        focusChangedDirectly        /**< Means that the focus was changed by a call to grabKeyboardFocus(). */
+        focusChangedByMouseClick, /**< Means that the user clicked the mouse to change focus. */
+        focusChangedByTabKey, /**< Means that the user pressed the tab key to move the focus. */
+        focusChangedDirectly /**< Means that the focus was changed by a call to grabKeyboardFocus(). */
     };
 
     /** Enumeration used by the focusGainedWithDirection() method. */
@@ -2058,12 +2065,13 @@ public:
 
         @see isMouseButtonDown, ModifierKeys
     */
-    static bool JUCE_CALLTYPE isMouseButtonDownAnywhere() noexcept;
+    static bool JUCE_CALLTYPE isMouseButtonDownAnywhere () noexcept;
 
     /** Returns the mouse's current position, relative to this component.
         The return value is relative to the component's top-left corner.
     */
-    Point<int> getMouseXYRelative() const;
+    Point<int> getMouseXYRelative () const;
+
 
     //==============================================================================
     /** Called when this component's size has been changed.
@@ -2081,7 +2089,7 @@ public:
 
         @see moved, setSize
     */
-    virtual void resized();
+    virtual void resized ();
 
     /** Called when this component's position has been changed.
 
@@ -2098,7 +2106,7 @@ public:
 
         @see resized, setBounds
     */
-    virtual void moved();
+    virtual void moved ();
 
     /** Called when one of this component's children is moved or resized.
 
@@ -2116,7 +2124,7 @@ public:
 
         @see childBoundsChanged, moved, resized
     */
-    virtual void parentSizeChanged();
+    virtual void parentSizeChanged ();
 
     /** Called when this component has been moved to the front of its siblings.
 
@@ -2125,7 +2133,7 @@ public:
 
         @see toFront
     */
-    virtual void broughtToFront();
+    virtual void broughtToFront ();
 
     /** Adds a listener to be told about changes to the component hierarchy or position.
 
@@ -2167,7 +2175,7 @@ public:
     virtual void handleCommandMessage (int commandId);
 
     //==============================================================================
-   #if JUCE_MODAL_LOOPS_PERMITTED
+#if JUCE_MODAL_LOOPS_PERMITTED
     /** Runs a component modally, waiting until the loop terminates.
 
         This method first makes the component visible, brings it to the front and
@@ -2193,8 +2201,8 @@ public:
         @see enterModalState, exitModalState, isCurrentlyModal, getCurrentlyModalComponent,
              isCurrentlyBlockedByAnotherModalComponent, ModalComponentManager
     */
-    int runModalLoop();
-   #endif
+    int runModalLoop ();
+#endif
 
     /** Puts the component into a modal state.
 
@@ -2246,7 +2254,7 @@ public:
     /** Returns the number of components that are currently in a modal state.
         @see getCurrentlyModalComponent
      */
-    static int JUCE_CALLTYPE getNumCurrentlyModalComponents() noexcept;
+    static int JUCE_CALLTYPE getNumCurrentlyModalComponents () noexcept;
 
     /** Returns one of the components that are currently modal.
 
@@ -2269,7 +2277,7 @@ public:
 
         @see runModalLoop, getCurrentlyModalComponent
     */
-    bool isCurrentlyBlockedByAnotherModalComponent() const;
+    bool isCurrentlyBlockedByAnotherModalComponent () const;
 
     /** When a component is modal, this callback allows it to choose which other
         components can still receive events.
@@ -2295,7 +2303,7 @@ public:
 
         @see isCurrentlyBlockedByAnotherModalComponent, canModalEventBeSentToComponent
     */
-    virtual void inputAttemptWhenModal();
+    virtual void inputAttemptWhenModal ();
 
 
     //==============================================================================
@@ -2303,13 +2311,13 @@ public:
         Each component has a NamedValueSet object which you can use to attach arbitrary
         items of data to it.
     */
-    NamedValueSet& getProperties() noexcept                             { return properties; }
+    NamedValueSet& getProperties () noexcept { return properties; }
 
     /** Returns the set of properties that belong to this component.
         Each component has a NamedValueSet object which you can use to attach arbitrary
         items of data to it.
     */
-    const NamedValueSet& getProperties() const noexcept                 { return properties; }
+    const NamedValueSet& getProperties () const noexcept { return properties; }
 
     //==============================================================================
     /** Looks for a colour that has been registered with the given colour ID number.
@@ -2362,14 +2370,14 @@ public:
 
         @see setColour, findColour, setLookAndFeel, sendLookAndFeelChange
     */
-    virtual void colourChanged();
+    virtual void colourChanged ();
 
     //==============================================================================
     /** Returns the underlying native window handle for this component.
 
         This is platform-dependent and strictly for power-users only!
     */
-    void* getWindowHandle() const;
+    void* getWindowHandle () const;
 
     //==============================================================================
     /** Holds a pointer to some type of Component, which automatically becomes null if
@@ -2389,37 +2397,51 @@ public:
     {
     public:
         /** Creates a null SafePointer. */
-        SafePointer() = default;
+        SafePointer () = default;
 
         /** Creates a SafePointer that points at the given component. */
-        SafePointer (ComponentType* component)                : weakRef (component) {}
+        SafePointer (ComponentType* component)
+            : weakRef (component)
+        {
+        }
 
         /** Creates a copy of another SafePointer. */
-        SafePointer (const SafePointer& other) noexcept       : weakRef (other.weakRef) {}
+        SafePointer (const SafePointer& other) noexcept
+            : weakRef (other.weakRef)
+        {
+        }
 
         /** Copies another pointer to this one. */
-        SafePointer& operator= (const SafePointer& other)     { weakRef = other.weakRef; return *this; }
+        SafePointer& operator= (const SafePointer& other)
+        {
+            weakRef = other.weakRef;
+            return *this;
+        }
 
         /** Copies another pointer to this one. */
-        SafePointer& operator= (ComponentType* newComponent)  { weakRef = newComponent; return *this; }
+        SafePointer& operator= (ComponentType* newComponent)
+        {
+            weakRef = newComponent;
+            return *this;
+        }
 
         /** Returns the component that this pointer refers to, or null if the component no longer exists. */
-        ComponentType* getComponent() const noexcept          { return dynamic_cast<ComponentType*> (weakRef.get()); }
+        ComponentType* getComponent () const noexcept { return dynamic_cast<ComponentType*> (weakRef.get()); }
 
         /** Returns the component that this pointer refers to, or null if the component no longer exists. */
-        operator ComponentType*() const noexcept              { return getComponent(); }
+        operator ComponentType* () const noexcept { return getComponent(); }
 
         /** Returns the component that this pointer refers to, or null if the component no longer exists. */
-        ComponentType* operator->() const noexcept            { return getComponent(); }
+        ComponentType* operator-> () const noexcept { return getComponent(); }
 
         /** If the component is valid, this deletes it and sets this pointer to null. */
-        void deleteAndZero()                                  { delete std::exchange (weakRef, nullptr); }
+        void deleteAndZero () { delete std::exchange (weakRef, nullptr); }
 
-        bool operator== (SafePointer other) const noexcept    { return weakRef == other.weakRef; }
-        bool operator!= (SafePointer other) const noexcept    { return ! operator== (other); }
+        bool operator== (SafePointer other) const noexcept { return weakRef == other.weakRef; }
+        bool operator!= (SafePointer other) const noexcept { return ! operator== (other); }
 
-        bool operator== (ComponentType* component) const noexcept   { return weakRef == component; }
-        bool operator!= (ComponentType* component) const noexcept   { return weakRef != component; }
+        bool operator== (ComponentType* component) const noexcept { return weakRef == component; }
+        bool operator!= (ComponentType* component) const noexcept { return weakRef != component; }
 
     private:
         WeakReference<Component> weakRef;
@@ -2432,14 +2454,14 @@ public:
         the list iterator to stop cleanly if the component is deleted by a listener callback
         while the list is still being iterated.
     */
-    class JUCE_API  BailOutChecker
+    class JUCE_API BailOutChecker
     {
     public:
         /** Creates a checker that watches one component. */
         BailOutChecker (Component* component);
 
         /** Returns true if either of the two components have been deleted since this object was created. */
-        bool shouldBailOut() const noexcept;
+        bool shouldBailOut () const noexcept;
 
     private:
         const WeakReference<Component> safePointer;
@@ -2456,16 +2478,16 @@ public:
         anything with it - all the functionality must be implemented by the positioner itself (e.g.
         it might choose to watch some kind of value and move the component when the value changes).
     */
-    class JUCE_API  Positioner
+    class JUCE_API Positioner
     {
     public:
         /** Creates a Positioner which can control the specified component. */
         explicit Positioner (Component& component) noexcept;
         /** Destructor. */
-        virtual ~Positioner() = default;
+        virtual ~Positioner () = default;
 
         /** Returns the component that this positioner controls. */
-        Component& getComponent() const noexcept    { return component; }
+        Component& getComponent () const noexcept { return component; }
 
         /** Attempts to set the component's position to the given rectangle.
             Unlike simply calling Component::setBounds(), this may involve the positioner
@@ -2482,7 +2504,7 @@ public:
     /** Returns the Positioner object that has been set for this component.
         @see setPositioner()
     */
-    Positioner* getPositioner() const noexcept;
+    Positioner* getPositioner () const noexcept;
 
     /** Sets a new Positioner object for this component.
         If there's currently another positioner set, it will be deleted. The object that is passed in
@@ -2502,28 +2524,28 @@ public:
     /** Returns the object that was set by setCachedComponentImage().
         @see setCachedComponentImage
     */
-    CachedComponentImage* getCachedComponentImage() const noexcept      { return cachedImage.get(); }
+    CachedComponentImage* getCachedComponentImage () const noexcept { return cachedImage.get(); }
 
     /** Invalidates cached images, both in the CachedComponentImage (if any) and the image effect state. */
-    void invalidateCachedImageResources();
+    void invalidateCachedImageResources ();
 
     /** Sets a flag to indicate whether mouse drag events on this Component should be ignored when it is inside a
         Viewport with drag-to-scroll functionality enabled. This is useful for Components such as sliders that
         should not move when their parent Viewport when dragged.
     */
-    void setViewportIgnoreDragFlag (bool ignoreDrag) noexcept           { flags.viewportIgnoreDragFlag = ignoreDrag; }
+    void setViewportIgnoreDragFlag (bool ignoreDrag) noexcept { flags.viewportIgnoreDragFlag = ignoreDrag; }
 
     /** Retrieves the current state of the Viewport drag-to-scroll functionality flag.
         @see setViewportIgnoreDragFlag
     */
-    bool getViewportIgnoreDragFlag() const noexcept                     { return flags.viewportIgnoreDragFlag; }
+    bool getViewportIgnoreDragFlag () const noexcept { return flags.viewportIgnoreDragFlag; }
 
     //==============================================================================
     /** Returns the title text for this component.
 
         @see setTitle
     */
-    String getTitle() const noexcept  { return componentTitle; }
+    String getTitle () const noexcept { return componentTitle; }
 
     /** Sets the title for this component.
 
@@ -2539,7 +2561,7 @@ public:
 
         @see setDescription
     */
-    String getDescription() const noexcept  { return componentDescription; }
+    String getDescription () const noexcept { return componentDescription; }
 
     /** Sets the description for this component.
 
@@ -2555,7 +2577,7 @@ public:
 
         @see setHelpText
     */
-    String getHelpText() const noexcept    { return componentHelpText; }
+    String getHelpText () const noexcept { return componentHelpText; }
 
     /** Sets the help text for this component.
 
@@ -2582,7 +2604,7 @@ public:
 
         @see setAccessible
     */
-    bool isAccessible() const noexcept;
+    bool isAccessible () const noexcept;
 
     /** Returns the accessibility handler for this component, or nullptr if this component is not
         accessible.
@@ -2592,7 +2614,7 @@ public:
 
         @see setAccessible
     */
-    AccessibilityHandler* getAccessibilityHandler();
+    AccessibilityHandler* getAccessibilityHandler ();
 
     /** Invalidates the AccessibilityHandler that is currently being used for this component.
 
@@ -2600,7 +2622,7 @@ public:
         and its handler needs to be updated. This will trigger a call to
         createAccessibilityHandler().
     */
-    void invalidateAccessibilityHandler();
+    void invalidateAccessibilityHandler ();
 
     //==============================================================================
     /** Override this method to return a custom AccessibilityHandler for this component.
@@ -2624,23 +2646,28 @@ public:
 
         @see getAccessibilityHandler
     */
-    virtual std::unique_ptr<AccessibilityHandler> createAccessibilityHandler();
+    virtual std::unique_ptr<AccessibilityHandler> createAccessibilityHandler ();
 
     //==============================================================================
     /** @cond */
     [[deprecated ("Use the setFocusContainerType that takes a more descriptive enum.")]]
     void setFocusContainer (bool shouldBeFocusContainer) noexcept
     {
-        setFocusContainerType (shouldBeFocusContainer ? FocusContainerType::keyboardFocusContainer
-                                                      : FocusContainerType::none);
+        setFocusContainerType (shouldBeFocusContainer
+                                   ? FocusContainerType::keyboardFocusContainer
+                                   : FocusContainerType::none);
     }
 
     [[deprecated ("Use the contains that takes a Point<int>.")]]
     void contains (int, int) = delete;
     /** @endcond */
-
+    #ifdef IGNORE_MOUSE_WITH_PRO_TOOLS_AUTOMATION_MODIFIERS
+        // Under Pro Tools,
+        // Cmd+Ctrl+Click switch automation lane if component is enabled for automation
+        // Cmd+Ctrl+Alt+Click opens dialog for Enable/Disable automation of component.
+        static bool JUCE_CALLTYPE wasProToolsModifiersDown() noexcept;
+    #endif
 private:
-
     //==============================================================================
     friend class ComponentPeer;
     friend class detail::MouseInputSourceImpl;
@@ -2675,32 +2702,32 @@ private:
 
     struct ComponentFlags
     {
-        bool hasHeavyweightPeerFlag       : 1;
-        bool visibleFlag                  : 1;
-        bool opaqueFlag                   : 1;
-        bool ignoresMouseClicksFlag       : 1;
-        bool allowChildMouseClicksFlag    : 1;
-        bool wantsKeyboardFocusFlag       : 1;
-        bool isFocusContainerFlag         : 1;
+        bool hasHeavyweightPeerFlag : 1;
+        bool visibleFlag : 1;
+        bool opaqueFlag : 1;
+        bool ignoresMouseClicksFlag : 1;
+        bool allowChildMouseClicksFlag : 1;
+        bool wantsKeyboardFocusFlag : 1;
+        bool isFocusContainerFlag : 1;
         bool isKeyboardFocusContainerFlag : 1;
-        bool childKeyboardFocusedFlag     : 1;
-        bool dontFocusOnMouseClickFlag    : 1;
-        bool hasFocusOutlineFlag          : 1;
-        bool alwaysOnTopFlag              : 1;
-        bool bufferToImageFlag            : 1;
-        bool bringToFrontOnClickFlag      : 1;
-        bool repaintOnMouseActivityFlag   : 1;
-        bool isDisabledFlag               : 1;
-        bool dontClipGraphicsFlag         : 1;
-        bool mouseDownWasBlocked          : 1;
-        bool isMoveCallbackPending        : 1;
-        bool isResizeCallbackPending      : 1;
-        bool viewportIgnoreDragFlag       : 1;
-        bool accessibilityIgnoredFlag     : 1;
-        bool cachedMouseInsideComponent   : 1;
-       #if JUCE_DEBUG
-        bool isInsidePaintCall            : 1;
-       #endif
+        bool childKeyboardFocusedFlag : 1;
+        bool dontFocusOnMouseClickFlag : 1;
+        bool hasFocusOutlineFlag : 1;
+        bool alwaysOnTopFlag : 1;
+        bool bufferToImageFlag : 1;
+        bool bringToFrontOnClickFlag : 1;
+        bool repaintOnMouseActivityFlag : 1;
+        bool isDisabledFlag : 1;
+        bool dontClipGraphicsFlag : 1;
+        bool mouseDownWasBlocked : 1;
+        bool isMoveCallbackPending : 1;
+        bool isResizeCallbackPending : 1;
+        bool viewportIgnoreDragFlag : 1;
+        bool accessibilityIgnoredFlag : 1;
+        bool cachedMouseInsideComponent : 1;
+#if JUCE_DEBUG
+        bool isInsidePaintCall : 1;
+#endif
     };
 
     union
@@ -2713,22 +2740,26 @@ private:
 
     //==============================================================================
     static void internalMouseEnter (SafePointer<Component>, MouseInputSource, Point<float>, Time);
-    static void internalMouseExit  (SafePointer<Component>, MouseInputSource, Point<float>, Time);
-    static void internalMouseDown  (SafePointer<Component>, MouseInputSource, const detail::PointerState&, Time);
-    static void internalMouseUp    (SafePointer<Component>, MouseInputSource, const detail::PointerState&, Time, ModifierKeys oldModifiers);
-    static void internalMouseDrag  (SafePointer<Component>, MouseInputSource, const detail::PointerState&, Time);
-    static void internalMouseMove  (SafePointer<Component>, MouseInputSource, Point<float>, Time);
+    static void internalMouseExit (SafePointer<Component>, MouseInputSource, Point<float>, Time);
+    // Under Pro Tools,
+    // Cmd+Ctrl+Click switch automation lane if component is enabled for automation
+    // Cmd+Ctrl+Alt+Click opens dialog for Enable/Disable automation of component.
+
+    static void internalMouseDown (SafePointer<Component>, MouseInputSource, const detail::PointerState&, Time);
+    static void internalMouseUp (SafePointer<Component>, MouseInputSource, const detail::PointerState&, Time, ModifierKeys oldModifiers);
+    static void internalMouseDrag (SafePointer<Component>, MouseInputSource, const detail::PointerState&, Time);
+    static void internalMouseMove (SafePointer<Component>, MouseInputSource, Point<float>, Time);
     static void internalMouseWheel (SafePointer<Component>, MouseInputSource, Point<float>, Time, const MouseWheelDetails&);
     static void internalMagnifyGesture (SafePointer<Component>, MouseInputSource, Point<float>, Time, float);
-    void internalBroughtToFront();
+    void internalBroughtToFront ();
     void internalKeyboardFocusGain (FocusChangeType, const WeakReference<Component>&, FocusChangeDirection);
     void internalKeyboardFocusGain (FocusChangeType);
     void internalKeyboardFocusLoss (FocusChangeType);
     void internalChildKeyboardFocusChange (FocusChangeType, const WeakReference<Component>&);
-    void internalModalInputAttempt();
-    void internalModifierKeysChanged();
-    void internalChildrenChanged();
-    void internalHierarchyChanged();
+    void internalModalInputAttempt ();
+    void internalModifierKeysChanged ();
+    void internalChildrenChanged ();
+    void internalHierarchyChanged ();
     void internalRepaint (Rectangle<int>);
     void internalRepaintUnchecked (Rectangle<int>, bool);
     Component* removeChildComponent (int index, bool sendParentEvents, bool sendChildEvents);
@@ -2736,14 +2767,14 @@ private:
     void paintComponentAndChildren (Graphics&);
     void paintWithinParentContext (Graphics&);
     void sendMovedResizedMessages (bool wasMoved, bool wasResized);
-    void sendMovedResizedMessagesIfPending();
-    void repaintParent();
-    void sendFakeMouseMove() const;
+    void sendMovedResizedMessagesIfPending ();
+    void repaintParent ();
+    void sendFakeMouseMove () const;
     void takeKeyboardFocus (FocusChangeType, FocusChangeDirection);
     void grabKeyboardFocusInternal (FocusChangeType, bool canTryParent, FocusChangeDirection);
     void giveAwayKeyboardFocusInternal (bool sendFocusLossEvent);
-    void sendEnablementChangeMessage();
-    void sendVisibilityChangeMessage();
+    void sendEnablementChangeMessage ();
+    void sendVisibilityChangeMessage ();
 
     friend struct detail::ComponentHelpers;
 
@@ -2760,5 +2791,4 @@ protected:
     static std::unique_ptr<AccessibilityHandler> createIgnoredAccessibilityHandler (Component&);
     /** @endcond */
 };
-
 } // namespace juce

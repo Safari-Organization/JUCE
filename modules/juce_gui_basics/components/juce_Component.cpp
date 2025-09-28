@@ -2208,12 +2208,22 @@ void Component::internalMouseExit (SafePointer<Component> target, MouseInputSour
     Desktop::getInstance().getMouseListeners().callChecked (checker, [&] (MouseListener& l) { l.mouseExit (me); });
     MouseListenerList::sendMouseEvent (checker, &MouseListener::mouseExit);
 }
-
+#ifdef IGNORE_MOUSE_WITH_PRO_TOOLS_AUTOMATION_MODIFIERS
+    static bool wasProToolsModifiersDownState = false;
+    bool JUCE_CALLTYPE Component::wasProToolsModifiersDown() noexcept
+    {
+        return wasProToolsModifiersDownState;
+    }
+#endif
 void Component::internalMouseDown (SafePointer<Component> target,
                                    MouseInputSource source,
                                    const detail::PointerState& relativePointerState,
                                    Time time)
 {
+    #ifdef IGNORE_MOUSE_WITH_PRO_TOOLS_AUTOMATION_MODIFIERS
+    const auto curModifiers = ModifierKeys::getCurrentModifiers();
+    wasProToolsModifiersDownState = curModifiers.isCommandOrWinKeyDown() && curModifiers.isCtrlDown();
+    #endif
     auto& desktop = Desktop::getInstance();
 
     const auto me = makeMouseEvent (source,
@@ -2283,7 +2293,6 @@ void Component::internalMouseUp (SafePointer<Component> target,
                                  const ModifierKeys oldModifiers)
 {
     const auto originalTarget = target;
-
     const auto me = makeMouseEvent (source,
                                     relativePointerState,
                                     oldModifiers,
@@ -2296,6 +2305,11 @@ void Component::internalMouseUp (SafePointer<Component> target,
                                     source.isLongPressOrDrag());
 
     HierarchyChecker checker (&target, me);
+
+    #ifdef IGNORE_MOUSE_WITH_PRO_TOOLS_AUTOMATION_MODIFIERS
+    if (oldModifiers.isAltDown() && oldModifiers.isCommandDown() && oldModifiers.isCtrlDown())
+        return;
+    #endif
 
     if (target->flags.mouseDownWasBlocked && target->isCurrentlyBlockedByAnotherModalComponent())
     {
@@ -2317,6 +2331,7 @@ void Component::internalMouseUp (SafePointer<Component> target,
     desktop.getMouseListeners().callChecked (checker, [&] (MouseListener& l) { l.mouseUp (checker.eventWithNearestParent()); });
 
     MouseListenerList::sendMouseEvent (checker, &MouseListener::mouseUp);
+
 
     if (checker.shouldBailOut())
         return;

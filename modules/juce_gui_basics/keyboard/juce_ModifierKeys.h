@@ -67,6 +67,12 @@ public:
     /** Copies this object from another one. */
     ModifierKeys& operator= (const ModifierKeys&) = default;
 
+
+
+ inline bool isCommandOrWinKeyDown() const noexcept
+ {
+     return testFlags (commandModifier);
+ }
     //==============================================================================
     /** Checks whether the 'command' key flag is set (or 'ctrl' on Windows/Linux).
 

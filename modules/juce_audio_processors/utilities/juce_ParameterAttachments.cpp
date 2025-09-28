@@ -68,6 +68,11 @@ void ParameterAttachment::setValueAsCompleteGesture (float newDenormalisedValue)
 
 void ParameterAttachment::beginGesture()
 {
+     #ifdef IGNORE_MOUSE_WITH_PRO_TOOLS_AUTOMATION_MODIFIERS
+    if (Component::wasProToolsModifiersDown())
+        return;
+    #endif
+
     if (undoManager != nullptr)
         undoManager->beginNewTransaction();
 
